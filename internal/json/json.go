@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/fatih/color"
 	"io"
 	"os"
 )
@@ -90,7 +91,18 @@ func (J *JSON) Update() error {
 
 func (J *JSON) Show() {
 	for i := 0; i < len(J.English); i++ {
-		fmt.Printf("%s - %s Status: %s\n", J.English[i], J.Russian[i], J.Status[i])
+
+		fmt.Printf("\t%s\t- \t%s \t\t", J.English[i], J.Russian[i])
+		switch J.Status[i] {
+		case "New":
+			color.Red("%s\n", J.Status[i])
+		case "Familiar":
+			color.Yellow("%s\n", J.Status[i])
+		case "Known":
+			color.Blue("%s\n", J.Status[i])
+		case "Well-known":
+			color.Green("%s\n", J.Status[i])
+		}
 	}
 }
 

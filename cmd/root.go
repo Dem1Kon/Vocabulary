@@ -4,6 +4,7 @@ import (
 	"os"
 	"vocabulary/internal/add"
 	"vocabulary/internal/remove"
+	"vocabulary/internal/show"
 
 	"github.com/spf13/cobra"
 )
@@ -26,6 +27,7 @@ func Execute() {
 func init() {
 	rootCmd.AddCommand(add.AddCmd)
 	rootCmd.AddCommand(remove.RemoveCmd)
+	rootCmd.AddCommand(show.ShowCmd)
 
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="230b6ff2-c428-471a-a6dd-774ce64fba4a" name="Changes" comment="" />
+    <list default="true" id="230b6ff2-c428-471a-a6dd-774ce64fba4a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/cmd/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/root.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/json/json.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/json/json.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vocabulary.json" beforeDir="false" afterPath="$PROJECT_DIR$/vocabulary.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,9 +24,24 @@
     </option>
   </component>
   <component name="GOROOT" url="file:///usr/local/go" />
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Dem1Kon"
+  }
 }]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Dem1Kon/Vocabulary.git",
+    "accountId": "c2482f7e-4fd6-4625-b2a6-b639c4d373ee"
+  }
+}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2ypLToVcLNvjVvWjwbCCAEiqeRY" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -36,6 +57,7 @@
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "git-widget-placeholder": "main",
     "go.import.settings.migrated": "true",
     "last_opened_file_path": "/home/demian",
     "node.js.detected.package.eslint": "true",
@@ -44,6 +66,13 @@
     "onboarding.tips.debug.path": "/home/demian/Projects/English Vocabulary/main.go"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/internal/show" />
+      <recent name="$PROJECT_DIR$/internal/remove" />
+      <recent name="$PROJECT_DIR$/internal/add" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
