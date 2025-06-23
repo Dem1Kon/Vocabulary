@@ -84,12 +84,25 @@ func (J *JSON) Remove(rm string) error {
 	return nil
 }
 
-func (J *JSON) Update() error {
-	//TODO implement me
-	panic("implement me")
+func (J *JSON) Update(rm string, append []string) error {
+	err := J.Remove(rm)
+	if err != nil {
+		return err
+	}
+
+	err = J.Add(append[0], append[1])
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (J *JSON) Show() {
+	if len(J.English) == 0 {
+		fmt.Println("No words found")
+		return
+	}
 	for i := 0; i < len(J.English); i++ {
 
 		fmt.Printf("\t%s\t- \t%s \t\t", J.English[i], J.Russian[i])
