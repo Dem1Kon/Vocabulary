@@ -13,15 +13,21 @@ var (
 	FileOpenError   = errors.New("file open error")
 	FileDecodeError = errors.New("file decode error")
 	FileWriteError  = errors.New("file write error")
-	FileReadError   = errors.New("file read error")
 	FileEncodeError = errors.New("file encode error")
 	NotFoundError   = errors.New("not found error")
 )
 
+type Status struct {
+	Attempts int    `json:"attempts"`
+	Good     int    `json:"good"`
+	Rate     string `json:"rate"`
+	Percent  int    `json:"percent"`
+}
+
 type JSON struct {
 	English []string
 	Russian []string
-	Status  []string
+	Status  []Status
 }
 
 func Init() (*JSON, error) {
@@ -38,7 +44,7 @@ func Init() (*JSON, error) {
 		if !(errors.Is(err, io.EOF)) {
 			return nil, FileDecodeError
 		} else {
-			Json.Status = make([]string, 0, 10)
+			Json.Status = make([]Status, 0, 10)
 			Json.English = make([]string, 0, 10)
 			Json.Russian = make([]string, 0, 10)
 			err = nil
@@ -50,7 +56,7 @@ func Init() (*JSON, error) {
 func (J *JSON) Add(english, russian string) error {
 	J.English = append(J.English, english)
 	J.Russian = append(J.Russian, russian)
-	J.Status = append(J.Status, "New")
+	J.Status = append(J.Status, Status{Rate: "New"})
 
 	err := J.writeToAFile()
 	if err != nil {
@@ -106,7 +112,7 @@ func (J *JSON) Show() {
 	for i := 0; i < len(J.English); i++ {
 
 		fmt.Printf("\t%s\t- \t%s \t\t", J.English[i], J.Russian[i])
-		switch J.Status[i] {
+		switch J.Status[i].Rate {
 		case "New":
 			color.Red("%s\n", J.Status[i])
 		case "Familiar":

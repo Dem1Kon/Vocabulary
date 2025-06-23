@@ -2,10 +2,10 @@ package cmd
 
 import (
 	"os"
-	"vocabulary/internal/add"
-	"vocabulary/internal/remove"
-	"vocabulary/internal/show"
-	"vocabulary/internal/update"
+	"vocabulary/internal/words/add"
+	"vocabulary/internal/words/remove"
+	"vocabulary/internal/words/show"
+	"vocabulary/internal/words/update"
 
 	"github.com/spf13/cobra"
 )
