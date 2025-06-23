@@ -6,11 +6,6 @@ import (
 	"vocabulary/internal/json"
 )
 
-var (
-	amountFlag = 0
-	modeFlag   string
-)
-
 // TestCmd represents the test command
 var TestCmd = &cobra.Command{
 	Use:   "test",
@@ -19,19 +14,32 @@ var TestCmd = &cobra.Command{
 	Example: `vocabulary test
 vocabulary test -m New -a 15`,
 	Run: func(cmd *cobra.Command, args []string) {
+
 		Json, err := json.Init()
 		if err != nil {
 			log.Fatalln(err)
 		}
-		testing(Json, modeFlag, amountFlag)
+
+		mode, err := cmd.Flags().GetString("mode")
+		if err != nil {
+			log.Fatalln(err)
+		}
+
+		amount, err := cmd.Flags().GetInt("amount")
+		if err != nil {
+			log.Fatalln(err)
+		}
+
+		testing(Json, mode, amount)
 	},
 }
 
 func init() {
-	TestCmd.PersistentFlags().IntVarP(&amountFlag, "amount", "a", 0, "Flag for set amount of words")
-	TestCmd.PersistentFlags().StringVarP(&modeFlag, "mode", "m", "", "Flag for set mode[Level of word's knowledge]")
+	TestCmd.PersistentFlags().IntP("amount", "a", 0, "Flag for set amount of words")
+	TestCmd.Flags().StringP("mode", "m", "", "Flag for set mode[Level of word's knowledge]")
+	TestCmd.Flags().BoolP("foreign", "f", false, "Show only foreign words")
+	TestCmd.Flags().BoolP("native", "n", false, "Show only native words")
+
 }
 
-func testing(J *json.JSON, mode string, amount int) {
-
-}
+func testing(J *json.JSON, mode string, amount int) {}
