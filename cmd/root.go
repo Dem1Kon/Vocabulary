@@ -2,10 +2,11 @@ package cmd
 
 import (
 	"os"
-	"vocabulary/internal/add"
-	"vocabulary/internal/remove"
-	"vocabulary/internal/show"
-	"vocabulary/internal/update"
+	"vocabulary/internal/knowledgeCheck/test"
+	"vocabulary/internal/words/add"
+	"vocabulary/internal/words/remove"
+	"vocabulary/internal/words/show"
+	"vocabulary/internal/words/update"
 
 	"github.com/spf13/cobra"
 )
@@ -30,6 +31,7 @@ func init() {
 	rootCmd.AddCommand(remove.RemoveCmd)
 	rootCmd.AddCommand(show.ShowCmd)
 	rootCmd.AddCommand(update.UpdateCmd)
+	rootCmd.AddCommand(test.TestCmd)
 
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
