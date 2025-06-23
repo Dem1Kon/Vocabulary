@@ -3,6 +3,7 @@ package test
 import (
 	"github.com/spf13/cobra"
 	"log"
+	"math/rand"
 	"vocabulary/internal/json"
 )
 
@@ -42,4 +43,32 @@ func init() {
 
 }
 
-func testing(J *json.JSON, mode string, amount int) {}
+func testing(J *json.JSON, mode string, amount int) {
+
+	isForeign, _ := TestCmd.PersistentFlags().GetBool("foreign")
+	isNative, _ := TestCmd.PersistentFlags().GetBool("native")
+
+	for i := 0; i < amount; i++ {
+		switch {
+		default:
+			ChoiceTheWord(append(J.Foreign, J.Native...), mode)
+		case isForeign && !isNative:
+			ChoiceTheWord(J.Foreign, mode)
+		case isNative && !isForeign:
+			ChoiceTheWord(J.Native, mode)
+		}
+	}
+}
+
+func ChoiceTheWord(words []string, mode string) {
+	for {
+		r := rand.Intn(len(words))
+		switch mode {
+		case "New":
+		case "Familiar":
+		case "Known":
+		case "Well-known":
+		}
+	}
+
+}

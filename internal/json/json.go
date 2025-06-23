@@ -25,8 +25,8 @@ type Status struct {
 }
 
 type JSON struct {
-	English []string
-	Russian []string
+	Foreign []string
+	Native  []string
 	Status  []Status
 }
 
@@ -45,8 +45,8 @@ func Init() (*JSON, error) {
 			return nil, FileDecodeError
 		} else {
 			Json.Status = make([]Status, 0, 10)
-			Json.English = make([]string, 0, 10)
-			Json.Russian = make([]string, 0, 10)
+			Json.Foreign = make([]string, 0, 10)
+			Json.Native = make([]string, 0, 10)
 			err = nil
 		}
 	}
@@ -54,8 +54,8 @@ func Init() (*JSON, error) {
 }
 
 func (J *JSON) Add(english, russian string) error {
-	J.English = append(J.English, english)
-	J.Russian = append(J.Russian, russian)
+	J.Foreign = append(J.Foreign, english)
+	J.Native = append(J.Native, russian)
 	J.Status = append(J.Status, Status{Rate: "New"})
 
 	err := J.writeToAFile()
@@ -69,11 +69,11 @@ func (J *JSON) Add(english, russian string) error {
 func (J *JSON) Remove(rm string) error {
 	IsFound := false
 
-	for a, b := range J.English {
-		if J.Russian[a] == rm || b == rm {
+	for a, b := range J.Foreign {
+		if J.Native[a] == rm || b == rm {
 			IsFound = true
-			J.English = append(J.English[:a], J.English[a+1:]...)
-			J.Russian = append(J.Russian[:a], J.Russian[a+1:]...)
+			J.Foreign = append(J.Foreign[:a], J.Foreign[a+1:]...)
+			J.Native = append(J.Native[:a], J.Native[a+1:]...)
 			J.Status = append(J.Status[:a], J.Status[a+1:]...)
 			break
 		}
@@ -105,13 +105,13 @@ func (J *JSON) Update(rm string, append []string) error {
 }
 
 func (J *JSON) Show() {
-	if len(J.English) == 0 {
+	if len(J.Foreign) == 0 {
 		fmt.Println("No words found")
 		return
 	}
-	for i := 0; i < len(J.English); i++ {
+	for i := 0; i < len(J.Foreign); i++ {
 
-		fmt.Printf("\t%s\t- \t%s \t\t", J.English[i], J.Russian[i])
+		fmt.Printf("\t%s\t- \t%s \t\t", J.Foreign[i], J.Native[i])
 		switch J.Status[i].Rate {
 		case "New":
 			color.Red("%s\n", J.Status[i])

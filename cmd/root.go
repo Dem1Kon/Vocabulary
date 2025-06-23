@@ -13,10 +13,10 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:   "vocabulary",
-	Short: "Here you can train your English Vocabulary",
-	Long: `There is a list of words that can help to train your English Vocabulary.
-Enter 'English' to show English words to translate in Russian
-If you enter 'Russian' from Russian to English.`,
+	Short: "Here you can train your Foreign Vocabulary",
+	Long: `There is a list of words that can help to train your Foreign Vocabulary.
+Enter 'Foreign' to show Foreign words to translate in Native
+If you enter 'Native' from Native to Foreign.`,
 }
 
 func Execute() {
