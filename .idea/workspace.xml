@@ -60,6 +60,7 @@
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
     "git-widget-placeholder": "tests",
+
     "go.import.settings.migrated": "true",
     "last_opened_file_path": "/home/demian",
     "node.js.detected.package.eslint": "true",
@@ -70,7 +71,6 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/internal/knowledgeCheck/test" />
       <recent name="$PROJECT_DIR$/internal/words" />
       <recent name="$PROJECT_DIR$/internal/update" />
       <recent name="$PROJECT_DIR$/internal/show" />
