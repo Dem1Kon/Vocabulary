@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"os"
+	"vocabulary/internal/knowledgeCheck/test"
 	"vocabulary/internal/words/add"
 	"vocabulary/internal/words/remove"
 	"vocabulary/internal/words/show"
@@ -30,6 +31,7 @@ func init() {
 	rootCmd.AddCommand(remove.RemoveCmd)
 	rootCmd.AddCommand(show.ShowCmd)
 	rootCmd.AddCommand(update.UpdateCmd)
+	rootCmd.AddCommand(test.TestCmd)
 
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

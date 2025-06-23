@@ -8,7 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/root.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/add/add.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/words/add/add.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/json/json.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/json/json.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/remove/remove.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/words/remove/remove.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/show/show.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/words/show/show.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/update/update.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/words/update/update.go" afterDir="false" />
@@ -60,7 +59,8 @@
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "git-widget-placeholder": "PreparingJSONForTests",
+    "git-widget-placeholder": "tests",
+
     "go.import.settings.migrated": "true",
     "last_opened_file_path": "/home/demian",
     "node.js.detected.package.eslint": "true",
@@ -75,7 +75,6 @@
       <recent name="$PROJECT_DIR$/internal/update" />
       <recent name="$PROJECT_DIR$/internal/show" />
       <recent name="$PROJECT_DIR$/internal/remove" />
-      <recent name="$PROJECT_DIR$/internal/add" />
     </key>
   </component>
   <component name="SharedIndexes">
