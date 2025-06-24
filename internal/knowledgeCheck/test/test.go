@@ -61,12 +61,16 @@ func testing(J *json.JSON, mode string, amount int) {
 		}
 		checkMatch(pair, matched)
 	}
-
+	err := J.WriteToAFile()
+	if err != nil {
+		log.Fatalln(err)
+	}
 }
 
 func choiceAWord(Json *json.JSON, mode string) (*json.Pair, string, error) {
 	var b *json.Pair
 	for _, b = range Json.Pairs {
+		b.Rate()
 		switch {
 		case !isForeign && !isNative && (b.Status.Rate == mode || mode == "Any"):
 
@@ -106,10 +110,13 @@ func checkMatch(pair *json.Pair, matched string) bool {
 
 	if (pair.English == matched && pair.Russian == answer) || (pair.Russian == matched && pair.English == answer) {
 		fmt.Println("Well done")
+		pair.Status.Attempts++
+		pair.Status.Good++
 		return true
 	}
 
 	fmt.Println("Wrong answer")
+	pair.Status.Attempts++
 
 	return false
 }
