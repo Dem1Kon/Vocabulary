@@ -31,6 +31,7 @@ type Pair struct {
 }
 
 type JSON struct {
+
 	Amount int
 	Pairs  map[int]*Pair
 }
