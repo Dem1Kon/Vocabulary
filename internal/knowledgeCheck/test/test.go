@@ -7,7 +7,9 @@ import (
 	"log"
 	"math/rand"
 	"strings"
+	"time"
 	"vocabulary/internal/json"
+	"vocabulary/utils"
 )
 
 var (
@@ -112,10 +114,14 @@ func checkMatch(pair *json.Pair, matched string) bool {
 		fmt.Println("Well done")
 		pair.Status.Attempts++
 		pair.Status.Good++
+		time.Sleep(time.Second)
+		utils.ClearTerminal()
 		return true
 	}
 
 	fmt.Println("Wrong answer")
+	time.Sleep(time.Second)
+	utils.ClearTerminal()
 	pair.Status.Attempts++
 
 	return false
