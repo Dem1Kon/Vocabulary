@@ -1,10 +1,18 @@
 package test
 
 import (
+	"errors"
+	"fmt"
 	"github.com/spf13/cobra"
 	"log"
 	"math/rand"
+	"strings"
 	"vocabulary/internal/json"
+)
+
+var (
+	isForeign bool
+	isNative  bool
 )
 
 // TestCmd represents the test command
@@ -36,39 +44,72 @@ vocabulary test -m New -a 15`,
 }
 
 func init() {
-	TestCmd.PersistentFlags().IntP("amount", "a", 0, "Flag for set amount of words")
-	TestCmd.Flags().StringP("mode", "m", "", "Flag for set mode[Level of word's knowledge]")
-	TestCmd.Flags().BoolP("foreign", "f", false, "Show only foreign words")
-	TestCmd.Flags().BoolP("native", "n", false, "Show only native words")
-
+	TestCmd.PersistentFlags().IntP("amount", "a", 10, "Flag for set amount of words")
+	TestCmd.Flags().StringP("mode", "m", "Any", "Flag for set mode[Level of word's knowledge]")
+	TestCmd.Flags().BoolVarP(&isForeign, "foreign", "f", false, "Show only foreign words")
+	TestCmd.Flags().BoolVarP(&isNative, "native", "n", false, "Show only native words")
 }
 
 func testing(J *json.JSON, mode string, amount int) {
-
-	isForeign, _ := TestCmd.PersistentFlags().GetBool("foreign")
-	isNative, _ := TestCmd.PersistentFlags().GetBool("native")
-
-	for i := 0; i < amount; i++ {
-		switch {
-		default:
-			ChoiceTheWord(append(J.Foreign, J.Native...), mode)
-		case isForeign && !isNative:
-			ChoiceTheWord(J.Foreign, mode)
-		case isNative && !isForeign:
-			ChoiceTheWord(J.Native, mode)
-		}
+	if len(J.Pairs) < amount {
+		amount = len(J.Pairs)
 	}
+	for i := 0; i < amount; i++ {
+		pair, matched, err := choiceAWord(J, mode)
+		if err != nil {
+			log.Fatalln(err)
+		}
+		checkMatch(pair, matched)
+	}
+
 }
 
-func ChoiceTheWord(words []string, mode string) {
-	for {
-		r := rand.Intn(len(words))
-		switch mode {
-		case "New":
-		case "Familiar":
-		case "Known":
-		case "Well-known":
+func choiceAWord(Json *json.JSON, mode string) (*json.Pair, string, error) {
+	var b *json.Pair
+	for _, b = range Json.Pairs {
+		switch {
+		case !isForeign && !isNative && (b.Status.Rate == mode || mode == "Any"):
+
+			r := rand.Intn(2)
+			switch r {
+			case 0:
+				fmt.Print("Translate '", b.English, "': ")
+				return b, b.English, nil
+			case 1:
+				fmt.Print("Translate '", b.Russian, "': ")
+				return b, b.Russian, nil
+			}
+
+		case isForeign && !isNative && (b.Status.Rate == mode || mode == "Any"):
+
+			fmt.Print("Translate '", b.English, "': ")
+			return b, b.English, nil
+		case isNative && !isForeign && (b.Status.Rate == mode || mode == "Any"):
+
+			fmt.Print("Translate '", b.Russian, "': ")
+			return b, b.Russian, nil
 		}
 	}
 
+	return nil, "", errors.New("could not find a matching pair")
+}
+
+func checkMatch(pair *json.Pair, matched string) bool {
+	if pair == nil {
+		return false
+	}
+
+	var answer string
+
+	fmt.Scan(&answer)
+	answer = strings.ToLower(answer)
+
+	if (pair.English == matched && pair.Russian == answer) || (pair.Russian == matched && pair.English == answer) {
+		fmt.Println("Well done")
+		return true
+	}
+
+	fmt.Println("Wrong answer")
+
+	return false
 }
