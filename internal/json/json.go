@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/fatih/color"
 	"io"
+	"log"
 	"os"
 )
 
@@ -16,19 +17,6 @@ var (
 	FileEncodeError = errors.New("file encode error")
 	NotFoundError   = errors.New("not found error")
 )
-
-type Status struct {
-	Attempts int    `json:"attempts"`
-	Good     int    `json:"good"`
-	Rate     string `json:"rate"`
-	Percent  int    `json:"percent"`
-}
-
-type Pair struct {
-	English string
-	Russian string
-	Status  Status
-}
 
 type JSON struct {
 	Amount int
@@ -59,7 +47,7 @@ func (J *JSON) Add(english, russian string) error {
 	J.Pairs[J.Amount] = &Pair{English: english, Russian: russian, Status: Status{Rate: "New"}}
 	J.Amount++
 
-	err := J.writeToAFile()
+	err := J.WriteToAFile()
 	if err != nil {
 		return FileWriteError
 	}
@@ -77,7 +65,7 @@ func (J *JSON) Remove(rm string) error {
 		}
 	}
 
-	err := J.writeToAFile()
+	err := J.WriteToAFile()
 	if err != nil {
 		return FileWriteError
 	}
@@ -110,6 +98,7 @@ func (J *JSON) Show() {
 	}
 
 	for _, pair := range J.Pairs {
+		pair.Rate()
 		fmt.Printf("\t%s\t- \t%s \t\t", pair.English, pair.Russian)
 		switch pair.Status.Rate {
 		case "New":
@@ -122,9 +111,13 @@ func (J *JSON) Show() {
 			color.Green("%s\n", pair.Status.Rate)
 		}
 	}
+	err := J.WriteToAFile()
+	if err != nil {
+		log.Fatalln(err)
+	}
 }
 
-func (J *JSON) writeToAFile() error {
+func (J *JSON) WriteToAFile() error {
 	file, err := os.OpenFile("vocabulary.json", os.O_WRONLY, 0666)
 	if err != nil {
 		return FileOpenError
