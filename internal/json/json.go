@@ -24,10 +24,15 @@ type Status struct {
 	Percent  int    `json:"percent"`
 }
 
+type Pair struct {
+	English string
+	Russian string
+	Status  Status
+}
+
 type JSON struct {
-	English []string
-	Russian []string
-	Status  []Status
+	Amount int
+	Pairs  map[int]*Pair
 }
 
 func Init() (*JSON, error) {
@@ -36,7 +41,7 @@ func Init() (*JSON, error) {
 		return nil, FileOpenError
 	}
 	defer file.Close()
-	Json := &JSON{}
+	Json := &JSON{Pairs: make(map[int]*Pair), Amount: 0}
 
 	decoder := json.NewDecoder(file)
 	err = decoder.Decode(Json)
@@ -44,9 +49,6 @@ func Init() (*JSON, error) {
 		if !(errors.Is(err, io.EOF)) {
 			return nil, FileDecodeError
 		} else {
-			Json.Status = make([]Status, 0, 10)
-			Json.English = make([]string, 0, 10)
-			Json.Russian = make([]string, 0, 10)
 			err = nil
 		}
 	}
@@ -54,9 +56,8 @@ func Init() (*JSON, error) {
 }
 
 func (J *JSON) Add(english, russian string) error {
-	J.English = append(J.English, english)
-	J.Russian = append(J.Russian, russian)
-	J.Status = append(J.Status, Status{Rate: "New"})
+	J.Pairs[J.Amount] = &Pair{English: english, Russian: russian, Status: Status{Rate: "New"}}
+	J.Amount++
 
 	err := J.writeToAFile()
 	if err != nil {
@@ -69,13 +70,10 @@ func (J *JSON) Add(english, russian string) error {
 func (J *JSON) Remove(rm string) error {
 	IsFound := false
 
-	for a, b := range J.English {
-		if J.Russian[a] == rm || b == rm {
+	for a, b := range J.Pairs {
+		if b.English == rm || b.Russian == rm {
 			IsFound = true
-			J.English = append(J.English[:a], J.English[a+1:]...)
-			J.Russian = append(J.Russian[:a], J.Russian[a+1:]...)
-			J.Status = append(J.Status[:a], J.Status[a+1:]...)
-			break
+			delete(J.Pairs, a)
 		}
 	}
 
@@ -85,6 +83,7 @@ func (J *JSON) Remove(rm string) error {
 	}
 
 	if !IsFound {
+		fmt.Println(NotFoundError)
 		return NotFoundError
 	}
 	return nil
@@ -105,22 +104,22 @@ func (J *JSON) Update(rm string, append []string) error {
 }
 
 func (J *JSON) Show() {
-	if len(J.English) == 0 {
+	if len(J.Pairs) == 0 {
 		fmt.Println("No words found")
 		return
 	}
-	for i := 0; i < len(J.English); i++ {
 
-		fmt.Printf("\t%s\t- \t%s \t\t", J.English[i], J.Russian[i])
-		switch J.Status[i].Rate {
+	for _, pair := range J.Pairs {
+		fmt.Printf("\t%s\t- \t%s \t\t", pair.English, pair.Russian)
+		switch pair.Status.Rate {
 		case "New":
-			color.Red("%s\n", J.Status[i])
+			color.Red("%s\n", pair.Status.Rate)
 		case "Familiar":
-			color.Yellow("%s\n", J.Status[i])
+			color.Yellow("%s\n", pair.Status.Rate)
 		case "Known":
-			color.Blue("%s\n", J.Status[i])
+			color.Blue("%s\n", pair.Status.Rate)
 		case "Well-known":
-			color.Green("%s\n", J.Status[i])
+			color.Green("%s\n", pair.Status.Rate)
 		}
 	}
 }
