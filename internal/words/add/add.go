@@ -1,6 +1,7 @@
 package add
 
 import (
+	"fmt"
 	"github.com/spf13/cobra"
 	"log"
 	"vocabulary/internal/json"
@@ -14,6 +15,11 @@ var AddCmd = &cobra.Command{
 	Example: `vocabulary add house дом`,
 	Args:    cobra.MinimumNArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) > 2 {
+			fmt.Println("If your unit from pair has more than one word you have to use this form 'your word'!")
+			return
+		}
+
 		JSON, err := json.Init()
 		if err != nil {
 			log.Fatal(err)

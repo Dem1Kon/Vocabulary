@@ -4,9 +4,11 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package update
 
 import (
+	"bufio"
 	"fmt"
 	"github.com/spf13/cobra"
 	"log"
+	"os"
 	"vocabulary/internal/json"
 )
 
@@ -55,20 +57,33 @@ func getAllArgs() (string, []string) {
 
 func getUpdateWord() string {
 	var toUpdate string
+	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Println("Enter the word you need to update: ")
-	fmt.Scan(&toUpdate)
+	scanner.Scan()
+	err := scanner.Err()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	toUpdate = scanner.Text()
 
 	return toUpdate
 }
 
 func getTranslate() []string {
 	TranslatePair := make([]string, 2)
+	scanner := bufio.NewScanner(os.Stdin)
 
 	fmt.Println("Enter the word: ")
-	fmt.Scan(&TranslatePair[0])
+	scanner.Scan()
+	err := scanner.Err()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	TranslatePair[0] = scanner.Text()
 
 	fmt.Println("Enter the word's translate: ")
-	fmt.Scan(&TranslatePair[1])
+	scanner.Scan()
+	TranslatePair[1] = scanner.Text()
 
 	return TranslatePair
 }

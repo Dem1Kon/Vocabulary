@@ -1,12 +1,13 @@
 package test
 
 import (
+	"bufio"
 	"errors"
 	"fmt"
 	"github.com/spf13/cobra"
 	"log"
 	"math/rand"
-	"strings"
+	"os"
 	"time"
 	"vocabulary/internal/json"
 	"vocabulary/utils"
@@ -106,9 +107,13 @@ func checkMatch(pair *json.Pair, matched string) bool {
 	}
 
 	var answer string
-
-	fmt.Scan(&answer)
-	answer = strings.ToLower(answer)
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	err := scanner.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+	answer = scanner.Text()
 
 	if (pair.Foreign == matched && pair.Translate == answer) || (pair.Translate == matched && pair.Foreign == answer) {
 		fmt.Println("Well done")
