@@ -44,7 +44,7 @@ func Init() (*JSON, error) {
 }
 
 func (J *JSON) Add(english, russian string) error {
-	J.Pairs[J.Amount] = &Pair{English: english, Russian: russian, Status: Status{Rate: "New"}}
+	J.Pairs[J.Amount] = &Pair{Foreign: english, Translate: russian, Status: Status{Rate: "New"}}
 	J.Amount++
 
 	err := J.WriteToAFile()
@@ -59,7 +59,7 @@ func (J *JSON) Remove(rm string) error {
 	IsFound := false
 
 	for a, b := range J.Pairs {
-		if b.English == rm || b.Russian == rm {
+		if b.Foreign == rm || b.Translate == rm {
 			IsFound = true
 			delete(J.Pairs, a)
 		}
@@ -99,7 +99,7 @@ func (J *JSON) Show() {
 
 	for _, pair := range J.Pairs {
 		pair.Rate()
-		fmt.Printf("\t%s\t- \t%s \t\t", pair.English, pair.Russian)
+		fmt.Printf("\t%s\t- \t%s \t\t", pair.Foreign, pair.Translate)
 		switch pair.Status.Rate {
 		case "New":
 			color.Red("%s\n", pair.Status.Rate)

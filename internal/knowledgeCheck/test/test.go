@@ -79,21 +79,21 @@ func choiceAWord(Json *json.JSON, mode string) (*json.Pair, string, error) {
 			r := rand.Intn(2)
 			switch r {
 			case 0:
-				fmt.Print("Translate '", b.English, "': ")
-				return b, b.English, nil
+				fmt.Print("Translate '", b.Foreign, "': ")
+				return b, b.Foreign, nil
 			case 1:
-				fmt.Print("Translate '", b.Russian, "': ")
-				return b, b.Russian, nil
+				fmt.Print("Translate '", b.Translate, "': ")
+				return b, b.Translate, nil
 			}
 
 		case isForeign && !isNative && (b.Status.Rate == mode || mode == "Any"):
 
-			fmt.Print("Translate '", b.English, "': ")
-			return b, b.English, nil
+			fmt.Print("Translate '", b.Foreign, "': ")
+			return b, b.Foreign, nil
 		case isNative && !isForeign && (b.Status.Rate == mode || mode == "Any"):
 
-			fmt.Print("Translate '", b.Russian, "': ")
-			return b, b.Russian, nil
+			fmt.Print("Translate '", b.Translate, "': ")
+			return b, b.Translate, nil
 		}
 	}
 
@@ -110,7 +110,7 @@ func checkMatch(pair *json.Pair, matched string) bool {
 	fmt.Scan(&answer)
 	answer = strings.ToLower(answer)
 
-	if (pair.English == matched && pair.Russian == answer) || (pair.Russian == matched && pair.English == answer) {
+	if (pair.Foreign == matched && pair.Translate == answer) || (pair.Translate == matched && pair.Foreign == answer) {
 		fmt.Println("Well done")
 		pair.Status.Attempts++
 		pair.Status.Good++

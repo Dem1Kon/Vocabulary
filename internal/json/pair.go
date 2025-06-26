@@ -8,9 +8,9 @@ type Status struct {
 }
 
 type Pair struct {
-	English string
-	Russian string
-	Status  Status
+	Foreign   string
+	Translate string
+	Status    Status
 }
 
 func (p *Pair) Rate() {
