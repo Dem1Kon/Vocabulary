@@ -26,6 +26,7 @@ var TestCmd = &cobra.Command{
 	Example: `vocabulary test
 vocabulary test -m New -a 15`,
 	Run: func(cmd *cobra.Command, args []string) {
+		utils.ClearTerminal()
 
 		Json, err := json.Init()
 		if err != nil {

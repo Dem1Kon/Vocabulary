@@ -8,8 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/knowledgeCheck/test/test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/knowledgeCheck/test/test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/words/add/add.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/words/add/add.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/words/remove/remove.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/words/remove/remove.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/words/update/update.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/words/update/update.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/setlogger.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/setlogger.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +59,7 @@
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "git-widget-placeholder": "fixAnswerScans",
+    "git-widget-placeholder": "main",
     "go.import.settings.migrated": "true",
     "last_opened_file_path": "/home/demian",
     "node.js.detected.package.eslint": "true",

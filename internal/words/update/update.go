@@ -41,8 +41,12 @@ vocabulary update [word to update (in any language)] [new word] [new word's tran
 			if err != nil {
 				log.Fatalln(err)
 			}
+		case 4:
+			fmt.Println("If your unit from pair has more than one word you have to use this form 'your word'!")
+			return
 		default:
 			fmt.Println("Gde-to ti naebal!")
+			return
 		}
 	},
 }

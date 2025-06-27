@@ -22,7 +22,7 @@ var AddCmd = &cobra.Command{
 
 		JSON, err := json.Init()
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalln(err)
 		}
 
 		err = JSON.Add(args[0], args[1])

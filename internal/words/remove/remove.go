@@ -1,6 +1,7 @@
 package remove
 
 import (
+	"fmt"
 	"github.com/spf13/cobra"
 	"log"
 	"vocabulary/internal/json"
@@ -15,6 +16,10 @@ remove слово`,
 	Aliases: []string{"rm"},
 	Args:    cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) > 1 {
+			fmt.Println("If your unit from pair has more than one word you have to use this form 'your word'!")
+			return
+		}
 		json, err := json.Init()
 		if err != nil {
 			log.Fatalln(err)
