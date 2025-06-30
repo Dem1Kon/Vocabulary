@@ -14,14 +14,15 @@ import (
 )
 
 var (
-	isForeign bool
-	isNative  bool
+	isForeign   bool
+	isNative    bool
+	IsTrainMode bool
 )
 
 // TestCmd represents the test command
 var TestCmd = &cobra.Command{
 	Use:   "test",
-	Short: "Testing knowledge",
+	Short: "testing knowledge",
 	Long:  `This command calls a knowledge test.`,
 	Example: `vocabulary test
 vocabulary test -m New -a 15`,
@@ -62,6 +63,7 @@ func testing(J *json.JSON, mode string, amount int) {
 		if err != nil {
 			log.Fatalln(err)
 		}
+
 		checkMatch(pair, matched)
 	}
 	err := J.WriteToAFile()
@@ -117,8 +119,10 @@ func checkMatch(pair *json.Pair, matched string) bool {
 
 	if (pair.Foreign == matched && pair.Translate == answer) || (pair.Translate == matched && pair.Foreign == answer) {
 		fmt.Println("Well done")
-		pair.Status.Attempts++
-		pair.Status.Good++
+		if !IsTrainMode {
+			pair.Status.Attempts++
+			pair.Status.Good++
+		}
 		time.Sleep(time.Second)
 		utils.ClearTerminal()
 		return true
