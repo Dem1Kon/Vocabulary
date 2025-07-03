@@ -14,14 +14,15 @@ import (
 )
 
 var (
-	isForeign bool
-	isNative  bool
+	IsForeign   bool
+	IsNative    bool
+	IsTrainMode bool
 )
 
 // TestCmd represents the test command
 var TestCmd = &cobra.Command{
 	Use:   "test",
-	Short: "Testing knowledge",
+	Short: "testing knowledge",
 	Long:  `This command calls a knowledge test.`,
 	Example: `vocabulary test
 vocabulary test -m New -a 15`,
@@ -43,18 +44,18 @@ vocabulary test -m New -a 15`,
 			log.Fatalln(err)
 		}
 
-		testing(Json, mode, amount)
+		Testing(Json, mode, amount)
 	},
 }
 
 func init() {
 	TestCmd.PersistentFlags().IntP("amount", "a", 10, "Flag for set amount of words")
 	TestCmd.Flags().StringP("mode", "m", "Any", "Flag for set mode[Level of word's knowledge]")
-	TestCmd.Flags().BoolVarP(&isForeign, "foreign", "f", false, "Show only foreign words")
-	TestCmd.Flags().BoolVarP(&isNative, "native", "n", false, "Show only native words")
+	TestCmd.Flags().BoolVarP(&IsForeign, "foreign", "f", false, "Show only foreign words")
+	TestCmd.Flags().BoolVarP(&IsNative, "native", "n", false, "Show only native words")
 }
 
-func testing(J *json.JSON, mode string, amount int) {
+func Testing(J *json.JSON, mode string, amount int) {
 	if len(J.Pairs) < amount {
 		amount = len(J.Pairs)
 	}
@@ -63,6 +64,7 @@ func testing(J *json.JSON, mode string, amount int) {
 		if err != nil {
 			log.Fatalln(err)
 		}
+
 		checkMatch(pair, matched)
 	}
 	err := J.WriteToAFile()
@@ -76,7 +78,7 @@ func choiceAWord(Json *json.JSON, mode string) (*json.Pair, string, error) {
 	for _, b = range Json.Pairs {
 		b.Rate()
 		switch {
-		case !isForeign && !isNative && (b.Status.Rate == mode || mode == "Any"):
+		case !IsForeign && !IsNative && (b.Status.Rate == mode || mode == "Any"):
 
 			r := rand.Intn(2)
 			switch r {
@@ -88,15 +90,16 @@ func choiceAWord(Json *json.JSON, mode string) (*json.Pair, string, error) {
 				return b, b.Translate, nil
 			}
 
-		case isForeign && !isNative && (b.Status.Rate == mode || mode == "Any"):
+		case IsForeign && !IsNative && (b.Status.Rate == mode || mode == "Any"):
 
 			fmt.Print("Translate '", b.Foreign, "': ")
 			return b, b.Foreign, nil
-		case isNative && !isForeign && (b.Status.Rate == mode || mode == "Any"):
+		case IsNative && !IsForeign && (b.Status.Rate == mode || mode == "Any"):
 
 			fmt.Print("Translate '", b.Translate, "': ")
 			return b, b.Translate, nil
 		}
+
 	}
 
 	return nil, "", errors.New("could not find a matching pair")
@@ -117,18 +120,32 @@ func checkMatch(pair *json.Pair, matched string) bool {
 	answer = scanner.Text()
 
 	if (pair.Foreign == matched && pair.Translate == answer) || (pair.Translate == matched && pair.Foreign == answer) {
+
+		if !IsTrainMode {
+			pair.Status.Attempts++
+			pair.Status.Good++
+		}
 		fmt.Println("Well done")
-		pair.Status.Attempts++
-		pair.Status.Good++
-		time.Sleep(time.Second)
-		utils.ClearTerminal()
+		waiting(pair)
+
 		return true
 	}
 
 	fmt.Println("Wrong answer")
-	time.Sleep(time.Second)
-	utils.ClearTerminal()
-	pair.Status.Attempts++
+	waiting(pair)
+
+	if !IsTrainMode {
+		pair.Status.Attempts++
+	}
 
 	return false
+}
+
+func waiting(pair *json.Pair) {
+	if IsTrainMode {
+		fmt.Println(pair.Foreign, "-", pair.Translate)
+	}
+
+	time.Sleep(time.Second * 2)
+	utils.ClearTerminal()
 }

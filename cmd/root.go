@@ -2,7 +2,8 @@ package cmd
 
 import (
 	"os"
-	"vocabulary/internal/knowledgeCheck/test"
+	"vocabulary/internal/knowledge/test"
+	"vocabulary/internal/knowledge/training"
 	"vocabulary/internal/words/add"
 	"vocabulary/internal/words/remove"
 	"vocabulary/internal/words/show"
@@ -13,8 +14,8 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:   "vocabulary",
-	Short: "Here you can train your Foreign Vocabulary",
-	Long: `There is a list of words that can help to train your Foreign Vocabulary.
+	Short: "Here you can training your Foreign Vocabulary",
+	Long: `There is a list of words that can help to training your Foreign Vocabulary.
 Enter 'Foreign' to show Foreign words to translate in Native
 If you enter 'Native' from Native to Foreign.`,
 }
@@ -32,6 +33,7 @@ func init() {
 	rootCmd.AddCommand(show.ShowCmd)
 	rootCmd.AddCommand(update.UpdateCmd)
 	rootCmd.AddCommand(test.TestCmd)
+	rootCmd.AddCommand(training.TrainingCmd)
 
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
