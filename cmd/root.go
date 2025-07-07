@@ -16,8 +16,7 @@ var rootCmd = &cobra.Command{
 	Use:   "vocabulary",
 	Short: "Here you can training your Foreign Vocabulary",
 	Long: `There is a list of words that can help to training your Foreign Vocabulary.
-Enter 'Foreign' to show Foreign words to translate in Native
-If you enter 'Native' from Native to Foreign.`,
+	You can train your vocabulary with this application.`,
 }
 
 func Execute() {
